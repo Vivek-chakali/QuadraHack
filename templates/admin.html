@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-bar">
+        <h2>Admin Control Panel</h2>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+
+    <!-- Add Item Section -->
+    <div class="card">
+        <h3>Add New Inventory Item</h3>
+
+        <form action="/add_item" method="POST">
+            <input type="text" name="item_name" placeholder="Item Name" required>
+            <input type="number" name="quantity" placeholder="Quantity" required>
+            <input type="number" name="threshold" placeholder="Threshold" required>
+            <button type="submit" class="add-btn">Add Item</button>
+        </form>
+    </div>
+
+    <!-- Inventory Table -->
+    <div class="card">
+        <h3>Current Inventory</h3>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Threshold</th>
+                <th>Status</th>
+                <th>Sell</th>
+            </tr>
+
+            {% for item in items %}
+            <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+
+                <td>
+                    {% if item[5] == "Normal" %}
+                        <span class="normal">Normal</span>
+                    {% elif item[5] == "Low" %}
+                        <span class="low">Low</span>
+                    {% else %}
+                        <span class="critical">Critical</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <form action="/sell_item/{{ item[0] }}" method="POST" style="display:inline;">
+                        <input type="number" name="sold_qty" placeholder="Qty" required style="width:70px;">
+                        <button type="submit" class="sell-btn">Sell</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

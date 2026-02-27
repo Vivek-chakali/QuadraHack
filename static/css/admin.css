@@ -1,0 +1,136 @@
+/* =========================
+   NAVY ADMIN DASHBOARD
+========================= */
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #f8fafc;
+    display: flex;
+    justify-content: center;
+}
+
+/* Main Wrapper */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.top-bar h2 {
+    font-weight: 600;
+}
+
+/* Logout Button */
+.logout-btn {
+    background: #dc2626;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #ef4444;
+    transform: translateY(-2px);
+}
+
+/* Card Sections */
+.card {
+    background: rgba(30, 41, 59, 0.9);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+}
+
+/* Form Styling */
+form input {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: white;
+    outline: none;
+}
+
+form input:focus {
+    border-color: #3b82f6;
+}
+
+/* Buttons */
+button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.add-btn {
+    background: #1e40af;
+    color: white;
+}
+
+.add-btn:hover {
+    background: #2563eb;
+}
+
+.sell-btn {
+    background: #f59e0b;
+    color: black;
+}
+
+.sell-btn:hover {
+    background: #fbbf24;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th {
+    background: #1e3a8a;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #334155;
+}
+
+tr:hover {
+    background: #1e293b;
+}
+
+/* Status Colors */
+.normal {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+.low {
+    color: #facc15;
+    font-weight: 600;
+}
+
+.critical {
+    color: #ef4444;
+    font-weight: 600;
+}
