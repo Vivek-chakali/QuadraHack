@@ -13,7 +13,7 @@ app.secret_key = "supersecretkey"
 # ---------------------------
 SENDER_EMAIL = "vivekchakali16@gmail.com"
 APP_PASSWORD = "ojqekdzkjyndfzkz"
-RECEIVER_EMAIL = "dasarisathwika12@gmail.com"
+RECEIVER_EMAIL = "shravyachakali4@gmail.com"
 
 # ---------------------------
 # DATABASE INITIALIZATION
@@ -288,9 +288,12 @@ def logout():
 # START SCHEDULER
 # ---------------------------
 scheduler = BackgroundScheduler()
-scheduler.add_job(check_inventory_levels, "interval", seconds=60)
+scheduler.add_job(check_inventory_levels, "interval", seconds=10)
 scheduler.start()
-print("Scheduler started — checking every 60 seconds")
+print("Scheduler started — checking every 10 seconds")
 
 if __name__ == "__main__":
     app.run(debug=False)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
