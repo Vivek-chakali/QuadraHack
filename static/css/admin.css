@@ -134,3 +134,44 @@ tr:hover {
     color: #ef4444;
     font-weight: 600;
 }
+.dashboard-cards{
+display:flex;
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+flex:1;
+padding:20px;
+border-radius:10px;
+text-align:center;
+font-weight:600;
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+.card p{
+font-size:28px;
+}
+
+.total{
+background:#1f3b73;
+color:white;
+}
+
+.normal{
+background:#2e7d32;
+color:white;
+}
+
+.low{
+background:#f9a825;
+color:white;
+}
+
+.critical{
+background:#c62828;
+color:white;
+}

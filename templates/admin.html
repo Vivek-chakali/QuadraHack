@@ -61,10 +61,10 @@
                 </td>
 
                 <td>
-                    <form action="/sell_item/{{ item[0] }}" method="POST" style="display:inline;">
-                        <input type="number" name="sold_qty" placeholder="Qty" required style="width:70px;">
-                        <button type="submit" class="sell-btn">Sell</button>
-                    </form>
+                   <form action="/sell_item/{{ item[0] }}" method="POST">
+    <input type="number" name="sold_qty" placeholder="Qty" required>
+    <button type="submit">Sell</button>
+</form>
                 </td>
             </tr>
             {% endfor %}

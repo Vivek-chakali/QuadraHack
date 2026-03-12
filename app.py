@@ -135,9 +135,7 @@ def home():
 
     return render_template("home.html")
 
-# -----------------------
-# LOGIN
-# -----------------------
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
@@ -187,20 +185,47 @@ def login():
 # -----------------------
 @app.route("/admin")
 def admin():
-
     if session.get("role") != "admin":
         return redirect("/login")
 
     conn = sqlite3.connect("inventory.db")
     cursor = conn.cursor()
-
     cursor.execute("SELECT * FROM inventory")
-
     items = cursor.fetchall()
-
     conn.close()
 
-    return render_template("admin.html",items=items)
+    processed_items = []
+
+    total = 0
+    normal = 0
+    low = 0
+    critical = 0
+
+    for item in items:
+        item_id, name, qty, threshold, last_updated = item
+
+        if qty > threshold:
+            status = "Normal"
+            normal += 1
+        elif qty > threshold/2:
+            status = "Low"
+            low += 1
+        else:
+            status = "Critical"
+            critical += 1
+
+        total += 1
+
+        processed_items.append((item_id, name, qty, threshold, last_updated, status))
+
+    return render_template(
+        "admin.html",
+        items=processed_items,
+        total=total,
+        normal=normal,
+        low=low,
+        critical=critical
+    )
 
 # -----------------------
 # ADD ITEM
@@ -225,6 +250,45 @@ def add_item():
 
     return redirect("/admin")
 
+#Sell Item
+
+@app.route("/sell_item/<int:item_id>", methods=["POST"])
+def sell_item(item_id):
+
+    if session.get("role") != "admin":
+        return redirect("/login")
+
+    sold_qty = int(request.form["sold_qty"])
+
+    conn = sqlite3.connect("inventory.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT item_name, quantity, threshold FROM inventory WHERE id=?",
+        (item_id,)
+    )
+
+    item = cursor.fetchone()
+
+    if item:
+        name, current_qty, threshold = item
+
+        new_qty = max(current_qty - sold_qty, 0)
+
+        cursor.execute(
+            "UPDATE inventory SET quantity=?, last_updated=? WHERE id=?",
+            (new_qty, datetime.datetime.now(), item_id)
+        )
+
+        conn.commit()
+
+        # CHECK STATUS AFTER SELL
+        if new_qty <= threshold/2:
+            send_email_alert(name, new_qty)
+
+    conn.close()
+
+    return redirect("/admin")
 # -----------------------
 # STAFF PAGE
 # -----------------------
@@ -238,12 +302,46 @@ def staff():
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM inventory")
-
     items = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM restock_logs ORDER BY timestamp DESC")
+    logs = cursor.fetchall()
 
     conn.close()
 
-    return render_template("staff.html",items=items)
+    processed_items = []
+
+    normal = 0
+    low = 0
+    critical = 0
+
+    for item in items:
+
+        item_id, name, qty, threshold, last_updated = item
+
+        if qty > threshold:
+            status = "Normal"
+            normal += 1
+
+        elif qty > threshold/2:
+            status = "Low"
+            low += 1
+
+        else:
+            status = "Critical"
+            critical += 1
+
+        processed_items.append((item_id, name, qty, threshold, last_updated, status))
+
+    return render_template(
+        "staff.html",
+        items=processed_items,
+        logs=logs,
+        total_items=len(processed_items),
+        normal=normal,
+        low=low,
+        critical=critical
+    )
 
 # -----------------------
 # LOGOUT
@@ -260,7 +358,7 @@ def logout():
 # -----------------------
 scheduler = BackgroundScheduler()
 
-scheduler.add_job(check_inventory_levels,"interval",seconds=20)
+scheduler.add_job(check_inventory_levels,"interval",minutes=2)
 
 scheduler.start()
 
