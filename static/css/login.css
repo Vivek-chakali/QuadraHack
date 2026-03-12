@@ -69,3 +69,45 @@ body {
     text-align: center;
     margin-top: 10px;
 }
+.demo-card{
+    background: rgba(255,255,255,0.95);
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.25);
+    width:320px;
+    font-family: Arial;
+}
+
+.demo-card h3{
+    margin-bottom:15px;
+    color:#1f4e79;
+}
+
+.cred-box{
+    background:#f3f6fa;
+    padding:12px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+.cred-box b{
+    color:#1f4e79;
+}
+
+.demo-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+.login-container{
+display:flex;
+gap:40px;
+align-items:center;
+justify-content:center;
+}
+.toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:10px 0;
+    font-size:14px;
+}

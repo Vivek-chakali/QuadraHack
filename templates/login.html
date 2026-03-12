@@ -12,33 +12,55 @@
 
 <body>
 
-<div class="login-card">
-    <h2>Airport Lounge Inventory</h2>
+<div class="login-container">
 
-    <form method="POST">
+    <!-- LOGIN CARD -->
+    <div class="login-card">
 
-        <input type="text" name="username" placeholder="Username" required>
+        <h2>Airport Lounge Inventory</h2>
 
-        <input type="password" name="password" placeholder="Password" required>
+        <form method="POST">
 
-        <button type="submit">Login</button>
+            <input type="text" name="username" placeholder="Username" required>
 
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
+            <input type="password" name="password" placeholder="Password" required>
 
-    </form>
+            <!-- EMAIL INPUT -->
+            <input type="email" name="email" placeholder="Enter email for alerts (optional)">
+
+            <button type="submit">Login</button>
+
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+            <label class="toggle">
+                 <input type="checkbox" name="alerts">
+                    Receive Low Stock Alerts
+            </label>
+        </form>
+
+    </div>
+
+    <!-- DEMO CARD -->
+    <div class="demo-card">
+
+        <h3>Demo Access</h3>
+
+        <div class="cred-box">
+            <b>Admin Login</b><br>
+            Username: admin<br>
+            Password: admin123
+        </div>
+
+        <div class="cred-box">
+            <b>Staff Login</b><br>
+            Username: staff<br>
+            Password: staff123
+        </div>
+
+    </div>
+
 </div>
-<div style="margin-top:20px; padding:12px; border:1px solid #ccc; border-radius:8px; background:#f8f8f8;">
-    <h4>Demo Access (For Recruiters / Reviewers)</h4>
 
-    <b>Admin Login</b><br>
-    Username: admin<br>
-    Password: admin123<br><br>
-
-    <b>Staff Login</b><br>
-    Username: staff<br>
-    Password: staff123
-</div>
 </body>
 </html>
