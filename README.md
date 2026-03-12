@@ -50,3 +50,5 @@ inventory-replenishment-agent/
 ├── config.py
 ├── requirements.txt
 └── README.md
+## Prototype
+https://quadrahack-1.onrender.com/
