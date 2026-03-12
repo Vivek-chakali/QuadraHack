@@ -294,3 +294,6 @@ print("Scheduler started — checking every 10 seconds")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+@app.route("/")
+def home():
+    return render_template("home.html")
