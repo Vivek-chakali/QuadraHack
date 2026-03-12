@@ -79,31 +79,44 @@ def send_email_alert(item_name, quantity):
 
     conn.close()
 
+    if not emails:
+        print("No users subscribed for alerts.")
+        return
+
+    subject = f"Critical Inventory Alert: {item_name}"
+    body = f"""
+Airport Inventory Alert
+
+Item: {item_name}
+Current Quantity: {quantity}
+
+Status: CRITICAL
+
+Please restock immediately.
+"""
+
     for email in emails:
-
-        subject = f"Restock Alert: {item_name}"
-        body = f"Stock for {item_name} is LOW.\nCurrent quantity: {quantity}"
-
-        msg = MIMEText(body)
-        msg["Subject"] = subject
-        msg["From"] = SENDER_EMAIL
-        msg["To"] = email[0]
 
         try:
 
-            server = smtplib.SMTP("smtp.gmail.com",587)
-            server.starttls()
-            server.login(SENDER_EMAIL,APP_PASSWORD)
+            msg = MIMEText(body)
+            msg["Subject"] = subject
+            msg["From"] = SENDER_EMAIL
+            msg["To"] = email[0]
 
-            server.sendmail(SENDER_EMAIL,email[0],msg.as_string())
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            server.login(SENDER_EMAIL, APP_PASSWORD)
+
+            server.sendmail(SENDER_EMAIL, email[0], msg.as_string())
 
             server.quit()
 
-            print("Email sent to",email[0])
+            print("Email sent to:", email[0])
 
         except Exception as e:
 
-            print("Email error:",e)
+            print("Email error:", e)
 
 # -----------------------
 # INVENTORY CHECK
